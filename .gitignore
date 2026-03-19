@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Database
+#*.db
+*.db-journal
+
+# Output files
+*.csv
+deals_export.*
+
+# Cookies/Login
+cookies.pkl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups (추가!)
+backup/
+backup_*/
+*_backup.db
+*_backup.py
+
+# Temp files (추가!)
+temp_chrome_profile/
+*.log
+*.tmpconfig.py 
