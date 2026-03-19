@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senior Housing M&A Intelligence · Market Tracker</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #13161e; --surface2: #1a1e2a;
+    --border: #252938; --accent: #c8a96e; --accent2: #7eb8a4;
+    --accent3: #e07b6a; --text: #e8e6e0; --text-muted: #7a7f94;
+    --text-dim: #454a5e; --acq: #c8a96e; --fin: #7eb8a4; --dev: #8b9ed4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-weight: 300;
+    min-height: 100vh; padding: 48px 40px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 48px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400;
+    letter-spacing: -0.5px; color: var(--text); line-height: 1.1;
+  }
+  .header-left h1 em { font-style: italic; color: var(--accent); }
+  .header-left p {
+    margin-top: 6px; font-size: 13px; color: var(--text-muted);
+    font-family: 'DM Mono', monospace; font-weight: 300; letter-spacing: 0.5px;
+  }
+  .header-right {
+    text-align: right; font-family: 'DM Mono', monospace;
+    font-size: 11px; color: var(--text-dim); line-height: 1.8;
+  }
+  .badge {
+    display: inline-block; background: var(--accent); color: var(--bg);
+    font-size: 9px; font-weight: 500; letter-spacing: 1.5px;
+    padding: 3px 8px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .kpi-row {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 1px; background: var(--border);
+    margin-bottom: 32px; border: 1px solid var(--border);
+  }
+  .kpi {
+    background: var(--surface); padding: 24px 20px;
+    position: relative; overflow: hidden;
+  }
+  .kpi::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--accent); opacity: 0; transition: opacity 0.3s;
+  }
+  .kpi:hover::before { opacity: 1; }
+  .kpi-label {
+    font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--text-muted); font-family: 'DM Mono', monospace; margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-family: 'DM Serif Display', serif; font-size: 28px;
+    color: var(--text); line-height: 1;
+  }
+  .kpi-sub { font-size: 11px; color: var(--text-dim); margin-top: 4px; font-family: 'DM Mono', monospace; }
+  .kpi-value.gold { color: var(--accent); }
+  .kpi-value.teal { color: var(--accent2); }
+  .kpi-value.blue { color: var(--dev); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid-full { margin-bottom: 16px; }
+  .panel {
+    background: var(--surface); border: 1px solid var(--border); padding: 28px;
+  }
+  .panel-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
+  }
+  .panel-title {
+    font-family: 'DM Serif Display', serif; font-size: 16px;
+    font-weight: 400; color: var(--text); letter-spacing: -0.2px;
+  }
+  .panel-meta { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-dim); }
+  .bar-list { display: flex; flex-direction: column; gap: 10px; }
+  .bar-item { display: flex; align-items: center; gap: 12px; }
+  .bar-label {
+    font-size: 12px; color: var(--text-muted); width: 130px; flex-shrink: 0;
+    font-family: 'DM Mono', monospace; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .bar-track { flex: 1; height: 6px; background: var(--surface2); }
+  .bar-fill { height: 100%; background: var(--accent); transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+  .bar-fill.teal { background: var(--accent2); }
+  .bar-count {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    color: var(--text); width: 24px; text-align: right; flex-shrink: 0;
+  }
+  .state-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .state-tile {
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 12px 10px; text-align: center; transition: border-color 0.2s;
+  }
+  .state-tile:hover { border-color: var(--accent); }
+  .state-abbr { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; color: var(--text); }
+  .state-count { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--accent); line-height: 1.2; }
+  .state-label { font-size: 9px; color: var(--text-dim); letter-spacing: 0.5px; text-transform: uppercase; }
+  .price-bars { display: flex; align-items: flex-end; gap: 8px; height: 120px; }
+  .price-col {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; gap: 6px; height: 100%; justify-content: flex-end;
+  }
+  .price-bar { width: 100%; background: var(--accent); opacity: 0.7; transition: opacity 0.2s; }
+  .price-bar:hover { opacity: 1; }
+  .price-n { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--text); line-height: 1; }
+  .price-range { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-dim); text-align: center; }
+  .insight-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); margin-bottom: 16px;
+  }
+  .insight { background: var(--surface); padding: 20px 24px; }
+  .insight-icon { font-size: 18px; margin-bottom: 8px; }
+  .insight-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .insight-text strong { color: var(--accent); font-weight: 500; }
+  footer {
+    margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); line-height: 1.8; }
+  .legend { display: flex; gap: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-acq { background: var(--acq); } .dot-fin { background: var(--fin); } .dot-dev { background: var(--dev); }
+  canvas { max-height: 220px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="badge">Live Intelligence</div>
+    <h1>Senior Housing <em>M&A</em> Tracker</h1>
+    <p>Automated pipeline · SeniorsHousingBusiness.com · SeniorHousingNews.com</p>
+  </div>
+  <div class="header-right">
+    <div>226 M&A Deals · 44 Development Projects</div>
+    <div>Apr 2025 — Mar 2026</div>
+    <div>Updated March 18, 2026</div>
+  </div>
+</header>
+
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-label">Acquisitions</div>
+    <div class="kpi-value gold">213</div>
+    <div class="kpi-sub">tracked deals</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Total Value</div>
+    <div class="kpi-value">$56.0B</div>
+    <div class="kpi-sub">64 priced deals</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">MA Units</div>
+    <div class="kpi-value">35,349</div>
+    <div class="kpi-sub">beds transacted</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Dev Pipeline</div>
+    <div class="kpi-value blue">44</div>
+    <div class="kpi-sub">5,404 units planned</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Financing</div>
+    <div class="kpi-value teal">13</div>
+    <div class="kpi-sub">loan transactions</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">States</div>
+    <div class="kpi-value">37</div>
+    <div class="kpi-sub">geographic coverage</div>
+  </div>
+</div>
+
+<div class="grid-full">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Deal Volume — Monthly Trend</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot dot-acq"></div>Acquisitions</div>
+        <div class="legend-item"><div class="legend-dot dot-fin"></div>Financing</div>
+        <div class="legend-item"><div class="legend-dot dot-dev"></div>Development</div>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="volumeChart"></canvas></div>
+  </div>
+</div>
+
+<div class="grid-3">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Most Active Buyers</div>
+      <div class="panel-meta">excl. undisclosed</div>
+    </div>
+    <div class="bar-list" id="buyers-list"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Top Metros</div>
+      <div class="panel-meta">deal count</div>
+    </div>
+    <div class="bar-list" id="metros-list"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Deal Size Distribution</div>
+      <div class="panel-meta">64 priced deals</div>
+    </div>
+    <div class="price-bars" id="price-bars"></div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Activity by State</div>
+      <div class="panel-meta">Top 15</div>
+    </div>
+    <div class="state-grid" id="state-grid"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-title">Property Type Mix</div>
+      <div class="panel-meta">acquisitions only</div>
+    </div>
+    <div class="chart-wrap" style="height:220px"><canvas id="ptChart"></canvas></div>
+  </div>
+</div>
+
+<div class="insight-row">
+  <div class="insight">
+    <div class="insight-icon">📈</div>
+    <div class="insight-text"><strong>Peak activity: Dec '25 (27 deals)</strong><br>
+    Deal volume hit its highest monthly point in Dec '25 — 2026 YTD pace remains elevated vs. 2H 2025.</div>
+  </div>
+  <div class="insight">
+    <div class="insight-icon">🌎</div>
+    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for 67 deals (30% of total). Atlanta leads all metros with 14 deals.</div>
+  </div>
+  <div class="insight">
+    <div class="insight-icon">🏗️</div>
+    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> 20 new development projects in 2026 YTD — a leading indicator of supply pressure in 18–24 months.</div>
+  </div>
+</div>
+
+<footer>
+  <p>
+    Data sourced from SeniorsHousingBusiness.com · SeniorHousingNews.com<br>
+    Extracted via automated pipeline using GPT-3.5 · Built by Jay Kim
+  </p>
+  <p style="text-align:right">
+    226 M&A deals · 44 development projects<br>
+    Updated March 18, 2026
+  </p>
+</footer>
+
+<script>
+const DATA = {
+  "monthly": [
+    {
+      "month": "2025-04",
+      "Acquisition": 4,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
+      "month": "2025-05",
+      "Acquisition": 3,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
+      "month": "2025-06",
+      "Acquisition": 11,
+      "Financing": 1,
+      "Development": 3
+    },
+    {
+      "month": "2025-07",
+      "Acquisition": 7,
+      "Financing": 0,
+      "Development": 7
+    },
+    {
+      "month": "2025-08",
+      "Acquisition": 8,
+      "Financing": 2,
+      "Development": 0
+    },
+    {
+      "month": "2025-09",
+      "Acquisition": 16,
+      "Financing": 0,
+      "Development": 1
+    },
+    {
+      "month": "2025-10",
+      "Acquisition": 18,
+      "Financing": 0,
+      "Development": 1
+    },
+    {
+      "month": "2025-11",
+      "Acquisition": 10,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
+      "month": "2025-12",
+      "Acquisition": 27,
+      "Financing": 1,
+      "Development": 2
+    },
+    {
+      "month": "2026-01",
+      "Acquisition": 18,
+      "Financing": 1,
+      "Development": 3
+    },
+    {
+      "month": "2026-02",
+      "Acquisition": 16,
+      "Financing": 3,
+      "Development": 11
+    },
+    {
+      "month": "2026-03",
+      "Acquisition": 7,
+      "Financing": 2,
+      "Development": 6
+    }
+  ],
+  "buyers": [
+    {
+      "name": "LTC Properties",
+      "count": 6
+    },
+    {
+      "name": "Sonida Senior Living",
+      "count": 4
+    },
+    {
+      "name": "Ventas",
+      "count": 4
+    },
+    {
+      "name": "Harrison Street",
+      "count": 3
+    },
+    {
+      "name": "Health Wave Partners",
+      "count": 3
+    },
+    {
+      "name": "Publicly traded REIT",
+      "count": 3
+    },
+    {
+      "name": "Marx Development Group (MDG)",
+      "count": 3
+    },
+    {
+      "name": "Foundry Commercial and Fortress Investment Group",
+      "count": 2
+    }
+  ],
+  "metros": [
+    {
+      "metro": "Atlanta",
+      "count": 14
+    },
+    {
+      "metro": "New York City",
+      "count": 8
+    },
+    {
+      "metro": "Chicago",
+      "count": 8
+    },
+    {
+      "metro": "Denver",
+      "count": 7
+    },
+    {
+      "metro": "Minneapolis",
+      "count": 6
+    },
+    {
+      "metro": "Dallas",
+      "count": 5
+    },
+    {
+      "metro": "Los Angeles",
+      "count": 4
+    },
+    {
+      "metro": "Austin",
+      "count": 4
+    }
+  ],
+  "states": [
+    {
+      "state": "CA",
+      "count": 20
+    },
+    {
+      "state": "FL",
+      "count": 18
+    },
+    {
+      "state": "TX",
+      "count": 16
+    },
+    {
+      "state": "GA",
+      "count": 13
+    },
+    {
+      "state": "CO",
+      "count": 11
+    },
+    {
+      "state": "MN",
+      "count": 11
+    },
+    {
+      "state": "NY",
+      "count": 8
+    },
+    {
+      "state": "KY",
+      "count": 7
+    },
+    {
+      "state": "SC",
+      "count": 6
+    },
+    {
+      "state": "MO",
+      "count": 6
+    },
+    {
+      "state": "IL",
+      "count": 6
+    },
+    {
+      "state": "OR",
+      "count": 6
+    },
+    {
+      "state": "WI",
+      "count": 6
+    },
+    {
+      "state": "AZ",
+      "count": 5
+    },
+    {
+      "state": "AL",
+      "count": 5
+    }
+  ],
+  "price_dist": [
+    {
+      "range": "<$50M",
+      "count": 22
+    },
+    {
+      "range": "$50–100M",
+      "count": 13
+    },
+    {
+      "range": "$100–200M",
+      "count": 13
+    },
+    {
+      "range": "$200–500M",
+      "count": 7
+    },
+    {
+      "range": "$500M+",
+      "count": 9
+    }
+  ],
+  "property_types": [
+    {
+      "type": "SNF",
+      "count": 38
+    },
+    {
+      "type": "AL/MC",
+      "count": 34
+    },
+    {
+      "type": "IL/AL/MC",
+      "count": 30
+    },
+    {
+      "type": "AL",
+      "count": 16
+    },
+    {
+      "type": "Other",
+      "count": 16
+    },
+    {
+      "type": "IL",
+      "count": 10
+    }
+  ]
+};
+
+Chart.defaults.color = '#7a7f94';
+Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.font.size = 11;
+const GOLD = '#c8a96e', TEAL = '#7eb8a4', BLUE = '#8b9ed4';
+
+// Volume chart
+new Chart(document.getElementById('volumeChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: DATA.monthly.map(d => d.month),
+    datasets: [
+      { label: 'Acquisitions', data: DATA.monthly.map(d => d.Acquisition), backgroundColor: GOLD+'cc', borderColor: GOLD, borderWidth: 1 },
+      { label: 'Financing',    data: DATA.monthly.map(d => d.Financing),   backgroundColor: TEAL+'cc', borderColor: TEAL, borderWidth: 1 },
+      { label: 'Development',  data: DATA.monthly.map(d => d.Development), backgroundColor: BLUE+'cc', borderColor: BLUE, borderWidth: 1 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { backgroundColor: '#13161e', borderColor: '#252938', borderWidth: 1, titleColor: '#e8e6e0', bodyColor: '#7a7f94' }
+    },
+    scales: {
+      x: { stacked: true, grid: { color: '#252938', drawTicks: false }, border: { color: '#252938' }, ticks: { color: '#454a5e' } },
+      y: { stacked: true, grid: { color: '#252938', drawTicks: false }, border: { color: '#252938' }, ticks: { stepSize: 5 } }
+    }
+  }
+});
+
+// Buyers
+const buyersMax = Math.max(...DATA.buyers.map(d => d.count));
+const buyersList = document.getElementById('buyers-list');
+DATA.buyers.forEach(d => {
+  buyersList.innerHTML += `<div class="bar-item"><div class="bar-label">${d.name}</div><div class="bar-track"><div class="bar-fill" style="width:${(d.count/buyersMax*100).toFixed(0)}%"></div></div><div class="bar-count">${d.count}</div></div>`;
+});
+
+// Metros
+const metroMax = Math.max(...DATA.metros.map(d => d.count));
+const metroList = document.getElementById('metros-list');
+DATA.metros.forEach(d => {
+  metroList.innerHTML += `<div class="bar-item"><div class="bar-label">${d.metro}</div><div class="bar-track"><div class="bar-fill teal" style="width:${(d.count/metroMax*100).toFixed(0)}%"></div></div><div class="bar-count">${d.count}</div></div>`;
+});
+
+// Price dist
+const priceMax = Math.max(...DATA.price_dist.map(d => d.count));
+const priceBars = document.getElementById('price-bars');
+DATA.price_dist.forEach(d => {
+  const h = Math.max(12, (d.count/priceMax*100).toFixed(0));
+  priceBars.innerHTML += `<div class="price-col"><div class="price-n">${d.count}</div><div class="price-bar" style="height:${h}%"></div><div class="price-range">${d.range}</div></div>`;
+});
+
+// States
+const stateGrid = document.getElementById('state-grid');
+DATA.states.forEach(d => {
+  stateGrid.innerHTML += `<div class="state-tile"><div class="state-abbr">${d.state}</div><div class="state-count">${d.count}</div><div class="state-label">deals</div></div>`;
+});
+
+// Property type donut
+const ptColors = [GOLD, TEAL, BLUE, '#e07b6a', '#a78bca', '#6ab4e0'];
+new Chart(document.getElementById('ptChart').getContext('2d'), {
+  type: 'doughnut',
+  data: {
+    labels: DATA.property_types.map(d => d.type),
+    datasets: [{ data: DATA.property_types.map(d => d.count), backgroundColor: ptColors.map(c => c+'cc'), borderColor: ptColors, borderWidth: 1, hoverOffset: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true, cutout: '60%',
+    plugins: {
+      legend: { position: 'right', labels: { boxWidth: 10, boxHeight: 10, padding: 12, color: '#7a7f94', font: { size: 11 } } },
+      tooltip: { backgroundColor: '#13161e', borderColor: '#252938', borderWidth: 1, titleColor: '#e8e6e0', bodyColor: '#7a7f94' }
+    }
+  }
+});
+</script>
+</body>
+</html>
