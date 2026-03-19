@@ -101,6 +101,11 @@ def compute(deals, dev):
     top_metro_n = metros[0]["count"] if metros else 0
 
     dev_2026    = int(dated_dev[dated_dev["month"] >= "2026-01"].shape[0]) if len(dated_dev) else 0
+    dev_2025h2  = int(dated_dev[(dated_dev["month"] >= "2025-07") & (dated_dev["month"] <= "2025-12")].shape[0]) if len(dated_dev) else 0
+    # monthly avg: 2025 H2 vs 2026 YTD
+    dev_2025h2_monthly = round(dev_2025h2 / 6, 1) if dev_2025h2 else 0
+    dev_2026_months = max(1, len(set(dated_dev[dated_dev["month"] >= "2026-01"]["month"].tolist())))
+    dev_2026_monthly = round(dev_2026 / dev_2026_months, 1)
 
     min_date = dated["article_date"].min().strftime("%b %Y") if len(dated) else "—"
     max_date = dated["article_date"].max().strftime("%b %Y") if len(dated) else "—"
@@ -133,6 +138,9 @@ def compute(deals, dev):
             "top_metro":  top_metro,
             "top_metro_n": top_metro_n,
             "dev_2026":   dev_2026,
+            "dev_2025h2": dev_2025h2,
+            "dev_2026_monthly": dev_2026_monthly,
+            "dev_2025h2_monthly": dev_2025h2_monthly,
         }
     }
 
@@ -192,9 +200,10 @@ def generate(data):
     font-size: 11px; color: var(--text-dim); line-height: 1.8;
   }}
   .badge {{
-    display: inline-block; background: var(--accent); color: var(--bg);
-    font-size: 9px; font-weight: 500; letter-spacing: 1.5px;
-    padding: 3px 8px; text-transform: uppercase; margin-bottom: 8px;
+    display: inline-block; background: #2a1f0e; color: var(--accent);
+    border: 1px solid #4a3820;
+    font-size: 9px; font-weight: 500; letter-spacing: 1.4px;
+    padding: 3px 10px; text-transform: uppercase; margin-bottom: 10px;
   }}
   .kpi-row {{
     display: grid; grid-template-columns: repeat(6, 1fr);
@@ -294,8 +303,8 @@ def generate(data):
 
 <header>
   <div class="header-left">
-    <div class="badge">Live Intelligence</div>
-    <h1>Senior Housing <em>M&A</em> Tracker</h1>
+    <div class="badge">Work in Progress</div>
+    <h1>Senior Housing <em>Transaction</em><br><em>&amp; Development</em> Tracker</h1>
     <p>Automated pipeline · SeniorsHousingBusiness.com · SeniorHousingNews.com</p>
   </div>
   <div class="header-right">
@@ -405,7 +414,7 @@ def generate(data):
   </div>
   <div class="insight">
     <div class="insight-icon">🏗️</div>
-    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> {k['dev_2026']} new development projects in 2026 YTD — a leading indicator of supply pressure in 18–24 months.</div>
+    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> {k['dev_2026']} new development projects in 2026 YTD (~{k['dev_2026_monthly']}/month), up from {k['dev_2025h2']} in 2H 2025 (~{k['dev_2025h2_monthly']}/month) — a leading indicator of supply pressure in 18–24 months.</div>
   </div>
 </div>
 
