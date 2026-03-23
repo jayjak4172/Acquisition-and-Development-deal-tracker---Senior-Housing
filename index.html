@@ -147,41 +147,57 @@
     <p>Automated pipeline · SeniorsHousingBusiness.com · SeniorHousingNews.com</p>
   </div>
   <div class="header-right">
-    <div>226 M&A Deals · 44 Development Projects</div>
-    <div>Apr 2025 — Mar 2026</div>
-    <div>Updated March 19, 2026</div>
+    <div>333 M&A Deals · 65 Development Projects</div>
+    <div>Aug 2024 — Mar 2026</div>
+    <div>Updated March 23, 2026</div>
   </div>
 </header>
+
+<div class="insight-row">
+  <div class="insight">
+    <div class="insight-icon">📈</div>
+    <div class="insight-text"><strong>Peak activity: Oct '25 (38 deals)</strong><br>
+    Deal volume hit its highest monthly point in Oct '25 — 2026 YTD pace remains elevated vs. 2H 2025.</div>
+  </div>
+  <div class="insight">
+    <div class="insight-icon">🌎</div>
+    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for 95 deals (29% of total). Atlanta leads all metros with 17 deals.</div>
+  </div>
+  <div class="insight">
+    <div class="insight-icon">🏗️</div>
+    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> 27 new development projects in 2026 YTD (~9.0/month), up from 25 in 2H 2025 (~4.2/month) — a leading indicator of supply pressure in 18–24 months.</div>
+  </div>
+</div>
 
 <div class="kpi-row">
   <div class="kpi">
     <div class="kpi-label">Acquisitions</div>
-    <div class="kpi-value gold">213</div>
+    <div class="kpi-value gold">315</div>
     <div class="kpi-sub">tracked deals</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Total Value</div>
-    <div class="kpi-value">$56.0B</div>
-    <div class="kpi-sub">64 priced deals</div>
+    <div class="kpi-value">$64.1B</div>
+    <div class="kpi-sub">84 priced deals</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">MA Units</div>
-    <div class="kpi-value">35,349</div>
+    <div class="kpi-value">54,790</div>
     <div class="kpi-sub">beds transacted</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Dev Pipeline</div>
-    <div class="kpi-value blue">44</div>
-    <div class="kpi-sub">5,404 units planned</div>
+    <div class="kpi-value blue">65</div>
+    <div class="kpi-sub">9,027 units planned</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">Financing</div>
-    <div class="kpi-value teal">13</div>
+    <div class="kpi-value teal">18</div>
     <div class="kpi-sub">loan transactions</div>
   </div>
   <div class="kpi">
     <div class="kpi-label">States</div>
-    <div class="kpi-value">37</div>
+    <div class="kpi-value">42</div>
     <div class="kpi-sub">geographic coverage</div>
   </div>
 </div>
@@ -218,7 +234,7 @@
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">Deal Size Distribution</div>
-      <div class="panel-meta">64 priced deals</div>
+      <div class="panel-meta">84 priced deals</div>
     </div>
     <div class="price-bars" id="price-bars"></div>
   </div>
@@ -241,30 +257,14 @@
   </div>
 </div>
 
-<div class="insight-row">
-  <div class="insight">
-    <div class="insight-icon">📈</div>
-    <div class="insight-text"><strong>Peak activity: Dec '25 (27 deals)</strong><br>
-    Deal volume hit its highest monthly point in Dec '25 — 2026 YTD pace remains elevated vs. 2H 2025.</div>
-  </div>
-  <div class="insight">
-    <div class="insight-icon">🌎</div>
-    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for 67 deals (30% of total). Atlanta leads all metros with 14 deals.</div>
-  </div>
-  <div class="insight">
-    <div class="insight-icon">🏗️</div>
-    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> 20 new development projects in 2026 YTD (~6.7/month), up from 11 in 2H 2025 (~1.8/month) — a leading indicator of supply pressure in 18–24 months.</div>
-  </div>
-</div>
-
 <footer>
   <p>
     Data sourced from SeniorsHousingBusiness.com · SeniorHousingNews.com<br>
     Extracted via automated pipeline using GPT-3.5 · Built by Jay Kim
   </p>
   <p style="text-align:right">
-    226 M&A deals · 44 development projects<br>
-    Updated March 19, 2026
+    333 M&A deals · 65 development projects<br>
+    Updated March 23, 2026
   </p>
 </footer>
 
@@ -272,8 +272,56 @@
 const DATA = {
   "monthly": [
     {
+      "month": "2024-08",
+      "Acquisition": 26,
+      "Financing": 1,
+      "Development": 1
+    },
+    {
+      "month": "2024-09",
+      "Acquisition": 23,
+      "Financing": 2,
+      "Development": 0
+    },
+    {
+      "month": "2024-10",
+      "Acquisition": 12,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
+      "month": "2024-11",
+      "Acquisition": 6,
+      "Financing": 1,
+      "Development": 1
+    },
+    {
+      "month": "2024-12",
+      "Acquisition": 7,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
+      "month": "2025-01",
+      "Acquisition": 9,
+      "Financing": 1,
+      "Development": 0
+    },
+    {
+      "month": "2025-02",
+      "Acquisition": 9,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
+      "month": "2025-03",
+      "Acquisition": 10,
+      "Financing": 0,
+      "Development": 0
+    },
+    {
       "month": "2025-04",
-      "Acquisition": 4,
+      "Acquisition": 5,
       "Financing": 0,
       "Development": 0
     },
@@ -281,13 +329,13 @@ const DATA = {
       "month": "2025-05",
       "Acquisition": 3,
       "Financing": 0,
-      "Development": 0
+      "Development": 4
     },
     {
       "month": "2025-06",
-      "Acquisition": 11,
+      "Acquisition": 9,
       "Financing": 1,
-      "Development": 3
+      "Development": 7
     },
     {
       "month": "2025-07",
@@ -299,62 +347,70 @@ const DATA = {
       "month": "2025-08",
       "Acquisition": 8,
       "Financing": 2,
-      "Development": 0
+      "Development": 5
     },
     {
       "month": "2025-09",
-      "Acquisition": 16,
+      "Acquisition": 23,
       "Financing": 0,
-      "Development": 1
+      "Development": 9
     },
     {
       "month": "2025-10",
-      "Acquisition": 18,
+      "Acquisition": 38,
       "Financing": 0,
       "Development": 1
     },
     {
       "month": "2025-11",
-      "Acquisition": 10,
+      "Acquisition": 25,
       "Financing": 0,
-      "Development": 0
+      "Development": 1
     },
     {
       "month": "2025-12",
-      "Acquisition": 27,
+      "Acquisition": 38,
       "Financing": 1,
       "Development": 2
     },
     {
       "month": "2026-01",
-      "Acquisition": 18,
+      "Acquisition": 20,
       "Financing": 1,
-      "Development": 3
+      "Development": 10
     },
     {
       "month": "2026-02",
-      "Acquisition": 16,
-      "Financing": 3,
+      "Acquisition": 27,
+      "Financing": 5,
       "Development": 11
     },
     {
       "month": "2026-03",
-      "Acquisition": 7,
-      "Financing": 2,
+      "Acquisition": 10,
+      "Financing": 3,
       "Development": 6
     }
   ],
   "buyers": [
     {
-      "name": "LTC Properties",
+      "name": "Sonida Senior Living",
       "count": 6
     },
     {
-      "name": "Sonida Senior Living",
+      "name": "LTC Properties",
+      "count": 5
+    },
+    {
+      "name": "Publicly traded REIT",
       "count": 4
     },
     {
       "name": "Ventas",
+      "count": 4
+    },
+    {
+      "name": "Morgan Stanley Real Estate Investing",
       "count": 4
     },
     {
@@ -366,156 +422,148 @@ const DATA = {
       "count": 3
     },
     {
-      "name": "Publicly traded REIT",
+      "name": "Welltower",
       "count": 3
-    },
-    {
-      "name": "Marx Development Group (MDG)",
-      "count": 3
-    },
-    {
-      "name": "Foundry Commercial and Fortress Investment Group",
-      "count": 2
     }
   ],
   "metros": [
     {
       "metro": "Atlanta",
-      "count": 14
-    },
-    {
-      "metro": "New York City",
-      "count": 8
+      "count": 17
     },
     {
       "metro": "Chicago",
-      "count": 8
+      "count": 11
+    },
+    {
+      "metro": "Dallas",
+      "count": 10
     },
     {
       "metro": "Denver",
+      "count": 9
+    },
+    {
+      "metro": "New York City",
+      "count": 7
+    },
+    {
+      "metro": "Philadelphia",
       "count": 7
     },
     {
       "metro": "Minneapolis",
-      "count": 6
-    },
-    {
-      "metro": "Dallas",
-      "count": 5
+      "count": 7
     },
     {
       "metro": "Los Angeles",
-      "count": 4
-    },
-    {
-      "metro": "Austin",
-      "count": 4
+      "count": 6
     }
   ],
   "states": [
     {
-      "state": "CA",
-      "count": 20
+      "state": "FL",
+      "count": 27
     },
     {
-      "state": "FL",
-      "count": 18
+      "state": "CA",
+      "count": 26
     },
     {
       "state": "TX",
-      "count": 16
+      "count": 26
     },
     {
       "state": "GA",
-      "count": 13
+      "count": 16
     },
     {
       "state": "CO",
-      "count": 11
+      "count": 14
     },
     {
       "state": "MN",
+      "count": 13
+    },
+    {
+      "state": "PA",
       "count": 11
     },
     {
       "state": "NY",
-      "count": 8
-    },
-    {
-      "state": "KY",
-      "count": 7
-    },
-    {
-      "state": "SC",
-      "count": 6
-    },
-    {
-      "state": "MO",
-      "count": 6
+      "count": 10
     },
     {
       "state": "IL",
-      "count": 6
+      "count": 10
+    },
+    {
+      "state": "KY",
+      "count": 9
+    },
+    {
+      "state": "SC",
+      "count": 8
     },
     {
       "state": "OR",
-      "count": 6
+      "count": 8
     },
     {
       "state": "WI",
-      "count": 6
+      "count": 8
     },
     {
-      "state": "AZ",
-      "count": 5
+      "state": "MO",
+      "count": 7
     },
     {
-      "state": "AL",
-      "count": 5
+      "state": "NJ",
+      "count": 7
     }
   ],
   "price_dist": [
     {
       "range": "<$50M",
-      "count": 22
+      "count": 31
     },
     {
       "range": "$50–100M",
-      "count": 13
+      "count": 15
     },
     {
       "range": "$100–200M",
-      "count": 13
+      "count": 16
     },
     {
       "range": "$200–500M",
-      "count": 7
+      "count": 8
     },
     {
       "range": "$500M+",
-      "count": 9
+      "count": 14
     }
   ],
   "property_types": [
     {
       "type": "SNF",
-      "count": 38
+      "count": 50
     },
     {
       "type": "AL/MC",
-      "count": 34
+      "count": 41
     },
     {
       "type": "IL/AL/MC",
-      "count": 30
+      "count": 35
     },
     {
       "type": "AL",
-      "count": 16
+      "count": 33
     },
     {
       "type": "Other",
-      "count": 16
+      "count": 21
     },
     {
       "type": "IL",
