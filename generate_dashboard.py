@@ -171,8 +171,8 @@ def generate(data):
   :root {{
     --bg: #0d0f14; --surface: #13161e; --surface2: #1a1e2a;
     --border: #252938; --accent: #c8a96e; --accent2: #7eb8a4;
-    --accent3: #e07b6a; --text: #e8e6e0; --text-muted: #7a7f94;
-    --text-dim: #454a5e; --acq: #c8a96e; --fin: #7eb8a4; --dev: #8b9ed4;
+    --accent3: #e07b6a; --text: #e8e6e0; --text-muted: #b0b8d0;
+    --text-dim: #8892a4; --acq: #c8a96e; --fin: #7eb8a4; --dev: #8b9ed4;
   }}
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
   body {{
@@ -306,6 +306,7 @@ def generate(data):
     <div class="badge">Work in Progress</div>
     <h1>Senior Housing <em>Transaction</em><br><em>&amp; Development</em> Tracker</h1>
     <p>Automated pipeline · SeniorsHousingBusiness.com · SeniorHousingNews.com</p>
+    <p style="margin-top:8px; font-size:11px; color:var(--accent); font-family:'DM Mono',monospace; letter-spacing:0.5px;">Built by Jay Kim · jayjak4172@gmail.com</p>
   </div>
   <div class="header-right">
     <div>{k['total_deals']} M&A Deals · {k['dev_projects']} Development Projects</div>
@@ -313,6 +314,22 @@ def generate(data):
     <div>Updated {k['updated']}</div>
   </div>
 </header>
+
+<div class="insight-row">
+  <div class="insight">
+    <div class="insight-icon">📈</div>
+    <div class="insight-text"><strong>Peak activity: {peak_short} ({k['peak_n']} deals)</strong><br>
+    Deal volume hit its highest monthly point in {peak_short} — 2026 YTD pace remains elevated vs. 2H 2025.</div>
+  </div>
+  <div class="insight">
+    <div class="insight-icon">🌎</div>
+    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for {k['sunbelt_n']} deals ({k['sunbelt_pct']}% of total). {k['top_metro']} leads all metros with {k['top_metro_n']} deals.</div>
+  </div>
+  <div class="insight">
+    <div class="insight-icon">🏗️</div>
+    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> {k['dev_2026']} new development projects in 2026 YTD (~{k['dev_2026_monthly']}/month), up from {k['dev_2025h2']} in 2H 2025 (~{k['dev_2025h2_monthly']}/month) — a leading indicator of supply pressure in 18–24 months.</div>
+  </div>
+</div>
 
 <div class="kpi-row">
   <div class="kpi">
@@ -402,22 +419,6 @@ def generate(data):
   </div>
 </div>
 
-<div class="insight-row">
-  <div class="insight">
-    <div class="insight-icon">📈</div>
-    <div class="insight-text"><strong>Peak activity: {peak_short} ({k['peak_n']} deals)</strong><br>
-    Deal volume hit its highest monthly point in {peak_short} — 2026 YTD pace remains elevated vs. 2H 2025.</div>
-  </div>
-  <div class="insight">
-    <div class="insight-icon">🌎</div>
-    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for {k['sunbelt_n']} deals ({k['sunbelt_pct']}% of total). {k['top_metro']} leads all metros with {k['top_metro_n']} deals.</div>
-  </div>
-  <div class="insight">
-    <div class="insight-icon">🏗️</div>
-    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> {k['dev_2026']} new development projects in 2026 YTD (~{k['dev_2026_monthly']}/month), up from {k['dev_2025h2']} in 2H 2025 (~{k['dev_2025h2_monthly']}/month) — a leading indicator of supply pressure in 18–24 months.</div>
-  </div>
-</div>
-
 <footer>
   <p>
     Data sourced from SeniorsHousingBusiness.com · SeniorHousingNews.com<br>
@@ -432,7 +433,7 @@ def generate(data):
 <script>
 const DATA = {data_json};
 
-Chart.defaults.color = '#7a7f94';
+Chart.defaults.color = '#8892a4';
 Chart.defaults.font.family = "'DM Mono', monospace";
 Chart.defaults.font.size = 11;
 const GOLD = '#c8a96e', TEAL = '#7eb8a4', BLUE = '#8b9ed4';
@@ -455,7 +456,7 @@ new Chart(document.getElementById('volumeChart').getContext('2d'), {{
       tooltip: {{ backgroundColor: '#13161e', borderColor: '#252938', borderWidth: 1, titleColor: '#e8e6e0', bodyColor: '#7a7f94' }}
     }},
     scales: {{
-      x: {{ stacked: true, grid: {{ color: '#252938', drawTicks: false }}, border: {{ color: '#252938' }}, ticks: {{ color: '#454a5e' }} }},
+      x: {{ stacked: true, grid: {{ color: '#252938', drawTicks: false }}, border: {{ color: '#252938' }}, ticks: {{ color: '#8892a4' }} }},
       y: {{ stacked: true, grid: {{ color: '#252938', drawTicks: false }}, border: {{ color: '#252938' }}, ticks: {{ stepSize: 5 }} }}
     }}
   }}
