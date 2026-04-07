@@ -1,5 +1,5 @@
 """
-M&A Deal Scraper - v3.3
+M&A Deal Scraper - v3.4
 IMPROVEMENTS:
 - Distinguishes broker from seller/buyer
 - Extracts property/community name
@@ -7,6 +7,7 @@ IMPROVEMENTS:
 - Better GPT prompts to avoid confusion
 - ENHANCED: Better year_built/property_age extraction
 - v3.3: metro + state extraction (region kept for legacy)
+- v3.4: GPT-4o-mini upgrade + Skip logic + SHB 4-step date extraction
 """
 
 from selenium import webdriver
@@ -152,13 +153,15 @@ def extract_shb_date(soup):
     SHB 날짜 추출 - 4단계 fallback
     1. <meta property="article:published_time"> (WordPress 표준)
     2. <time> 태그 datetime attribute
-    3. 전체 페이지 텍스트에서 byline 날짜 패턴 (entry-content 밖 byline 포함)
+    3. 전체 페이지 텍스트 byline 날짜 패턴 (entry-content 밖 포함)
     4. JSON-LD structured data
     """
-    # Method 1: WordPress meta tag (가장 신뢰도 높음)
+    import json as _json
+
+    # Method 1: WordPress meta tag
     meta = soup.find('meta', {'property': 'article:published_time'})
     if meta and meta.get('content'):
-        date_str = meta['content'][:10]  # "2026-03-16T..." → "2026-03-16"
+        date_str = meta['content'][:10]
         if re.match(r'\d{4}-\d{2}-\d{2}', date_str):
             return date_str
 
@@ -171,8 +174,7 @@ def extract_shb_date(soup):
             if match:
                 return match.group(1)
 
-    # Method 3: 전체 페이지 텍스트에서 날짜 파싱
-    # entry-content 밖 byline 영역 포함 (e.g. "March 16, 2026" in byline)
+    # Method 3: 전체 페이지 텍스트 (byline 포함)
     full_text = soup.get_text()
     date_match = re.search(
         r'(January|February|March|April|May|June|July|August'
@@ -189,7 +191,6 @@ def extract_shb_date(soup):
     script = soup.find('script', {'type': 'application/ld+json'})
     if script and script.string:
         try:
-            import json as _json
             ld = _json.loads(script.string)
             date = ld.get('datePublished', '') or ld.get('dateCreated', '')
             if date:
@@ -217,7 +218,7 @@ def fetch_shb_with_requests(url):
         response = requests.get(url, headers=headers, timeout=15)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
-        
+
         # Title
         try:
             title_element = soup.find('h1')
@@ -225,7 +226,7 @@ def fetch_shb_with_requests(url):
         except:
             title = "N/A"
         print(f"   ✓ 제목: {title[:50]}...")
-        
+
         # Content (entry-content div)
         try:
             content_element = soup.find('div', class_='entry-content')
@@ -241,14 +242,14 @@ def fetch_shb_with_requests(url):
         # Date: 전체 soup에서 추출 (byline/meta 포함)
         article_date = extract_shb_date(soup)
         print(f"   ✓ 날짜: {article_date}")
-        
+
         return {
             'title': title,
             'content': content,
             'url': url,
             'article_date': article_date
         }
-    
+
     except requests.exceptions.RequestException as e:
         raise Exception(f"SHB HTTP fetch failed: {str(e)}")
     except Exception as e:
@@ -296,7 +297,7 @@ def calculate_age_and_year(year_built, property_age, announcement_date=None, art
 
 def extract_deal_data(article):
     """Extract M&A deal or Development project data"""
-    print(f"   GPT-3.5로 데이터 추출...")
+    print(f"   GPT-4o-mini로 데이터 추출...")
     
     client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
     
@@ -342,20 +343,28 @@ CRITICAL: Property/community names are NOT sellers!
 
 === TRANSACTION TYPE CLASSIFICATION ===
 
-1. M&A Deal - Acquisition of EXISTING properties:
-   - Company acquires another company/portfolio
-   - Purchase of operating facilities
-   → transaction_type: "M&A"
+There are exactly FOUR deal_type values. Use them precisely:
 
-2. Development Project - NEW construction:
-   - Land acquisition for development
-   - New building construction
-   - Ground-up development
-   → transaction_type: "Development"
+1. "Acquisition" — purchase of an existing operating property or portfolio
+   → transaction_type: "M&A", deal_type: "Acquisition"
 
-3. Financing-Only Deal:
-   - Loans, bonds, refinancing
-   → transaction_type: "Financing"
+2. "Acquisition Financing" — loan, refinancing, or recapitalization tied to
+   an EXISTING operating property (not under construction)
+   → transaction_type: "Financing", deal_type: "Acquisition Financing"
+
+3. "Development" — ground-up new construction or expansion of a property
+   → transaction_type: "Development", deal_type: "Development"
+   → project_type: "New Development" or "Expansion"
+
+4. "Development Financing" — construction loan, refi, or recap tied to a
+   project that is under construction or in development pipeline
+   → transaction_type: "Development", deal_type: "Development Financing"
+
+KEY SIGNALS to distinguish 2 vs 4:
+- Is the property already open and operating? → "Acquisition Financing"
+- Is the property being built or not yet open? → "Development Financing"
+- Does the article mention groundbreaking, construction timeline, or
+  expected completion date? → "Development Financing"
 
 === PROPERTY COUNT RULES ===
 
@@ -445,19 +454,18 @@ FOR M&A DEALS:
 FOR DEVELOPMENT PROJECTS:
 {{
   "transaction_type": "Development",
+  "deal_type": "Development or Development Financing",
   "property_name": "Name of the project/community or N/A",
-  
   "project_name": "Name of project (can be same as property_name) or N/A",
+  "project_type": "New Development or Expansion or N/A",
+
   "developer": "STANDARDIZED developer name or N/A",
   "general_contractor": "STANDARDIZED contractor name or N/A",
   "architect": "STANDARDIZED architect name or N/A",
-  "civil_engineer": "N/A",
-  "landscape_architect": "N/A",
-  "interior_designer": "N/A",
-  
+
   "operator": "Who will OPERATE when completed or N/A",
   "operator_type": "Owner-Operated / Third-Party / N/A",
-  
+
   "region": "State/region or N/A",
   "metro": "Primary metro area (e.g. Atlanta, Phoenix, Chicago) or N/A",
   "state": "2-letter state code (e.g. GA, AZ, IL) or N/A",
@@ -465,29 +473,29 @@ FOR DEVELOPMENT PROJECTS:
   "unit_count": NUMBER or N/A,
   "building_size_sqft": NUMBER or N/A,
   "land_size_acres": NUMBER or N/A,
-  
+
   "total_project_cost": NUMBER only in dollars or N/A,
   "funding_method": "Debt / Equity / Mixed or N/A",
-  "funding_details": "N/A",
-  
+  "lender": "Primary or largest lender name or N/A",
+  "loan_amount": NUMBER only in dollars or N/A,
+
   "income_target": "Affordable / Middle / Luxury / Mixed or N/A",
   "age_target": "55+ / 65+ / 75+ / 80+ / Mixed or N/A",
-  
+
   "amenities": "comma-separated list or N/A",
-  "services_provided": "N/A",
-  
+
   "announcement_date": "YYYY-MM-DD or N/A",
   "expected_completion_date": "YYYY-MM-DD or N/A",
   "project_status": "Announced / Under Construction / Completed or N/A",
   "article_date": "{article.get('article_date', 'N/A')}",
-  
+
   "extraction_confidence": 1-5
 }}
 
 FOR FINANCING-ONLY DEALS:
 {{
   "transaction_type": "Financing",
-  "deal_type": "Financing",
+  "deal_type": "Acquisition Financing",
   "property_name": "Name of property being financed or N/A",
   
   "borrower": "STANDARDIZED borrower name or N/A",
@@ -511,12 +519,46 @@ CRITICAL RULES:
 - For single property deals: property_count: 1 (NOT N/A!)
 - Price/loan_amount: NUMBER only. "$71M" = 71000000
 - Use "N/A" for missing - NEVER null, never 0, never empty string
-- Return ONLY JSON, no markdown"""
+- Return ONLY JSON, no markdown
+
+=== SKIP THESE — NOT INDIVIDUAL DEALS ===
+Return {{"transaction_type": "Skip"}} for:
+
+AGGREGATE STATISTICS & REPORTS:
+- Market/sector statistics: "The sector saw $14.4B in annual investment sales"
+- Aggregate metro transaction volumes: "In NYC, $766M changed hands across 13 properties"
+- NIC, MSCI, Green Street, or other research reports citing aggregate volume data
+- Articles citing NIC MAP construction start totals: "9,226 units started in 2023"
+
+EARNINGS CALLS & COMPANY ANNOUNCEMENTS:
+- REIT or operator earnings call summaries — even if a total investment figure is mentioned
+  e.g. "Ventas closed over $800M in deals with a $2.5B target" → SKIP
+- Company-level portfolio announcements without named individual properties
+  e.g. "Company announces $23B in transactions across its portfolio" → SKIP
+- Quarterly or annual results articles summarizing total deal volume
+
+CONFERENCE PANELS & COMMENTARY:
+- InterFace, NIC, or other conference panel discussions
+- Industry commentary or op-eds without a specific named transaction
+- Roundtable articles quoting multiple executives about market trends
+
+DEVELOPMENT-SPECIFIC SKIPS:
+- Articles about construction cost trends, labor shortages, or permitting delays
+  with no specific named project
+- Market outlook articles projecting future supply pipeline without naming a project
+- Articles about a developer's overall pipeline without a specific named community
+  e.g. "Developer X plans to build 2,000 units across the Southeast" → SKIP
+
+ONLY extract if the article describes a SPECIFIC transaction with ALL of:
+- A named property, community, or project
+- A named developer, buyer, seller, borrower, or lender
+- A specific location (city/state)
+If ANY of these three are missing, return Skip."""
     
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a precise M&A, Development, and Financing data extraction assistant. CRITICAL: Distinguish brokers from sellers/buyers. Extract property names. Never confuse property names with seller names. Return only valid JSON with 'N/A' for missing fields."},
+            {"role": "system", "content": "You are a precise M&A, Development, and Financing data extraction assistant for senior housing real estate. CRITICAL: Distinguish brokers from sellers/buyers. Extract property names. Never confuse property names with seller names. Be aggressive about skipping — earnings calls, conference panels, aggregate market reports, and company-level announcements without a named specific property must all return Skip. Return only valid JSON with 'N/A' for missing fields."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.1
@@ -534,9 +576,8 @@ CRITICAL RULES:
     data = json.loads(response_text)
     
     # POST-PROCESSING: Entity normalization
-    for field in ['buyer', 'seller', 'broker', 'borrower', 'lender', 'developer', 
-                  'general_contractor', 'architect', 'civil_engineer', 
-                  'landscape_architect', 'interior_designer', 'operator']:
+    for field in ['buyer', 'seller', 'broker', 'borrower', 'lender', 'developer',
+                  'general_contractor', 'architect', 'interior_designer', 'operator']:
         if data.get(field) and data[field] != 'N/A':
             data[field] = normalize_entity_name(data[field])
     
@@ -625,7 +666,12 @@ def process_urls_from_file(filename='urls.txt'):
             
             # Extract
             data = extract_deal_data(article)
-            
+
+            # Skip if GPT flagged as non-deal content
+            if data.get('transaction_type') == 'Skip':
+                print(f"   ⊘ Skip: 통계/집계 기사로 판단됨")
+                continue
+
             # Save based on transaction type
             transaction_type = data.get('transaction_type', 'M&A')
             
@@ -645,9 +691,9 @@ def process_urls_from_file(filename='urls.txt'):
             
             else:
                 # M&A deal (includes Financing)
-                if 'deal_type' not in data:
+                if 'deal_type' not in data or data.get('deal_type') == 'N/A':
                     if transaction_type == 'Financing':
-                        data['deal_type'] = 'Financing'
+                        data['deal_type'] = 'Acquisition Financing'
                     else:
                         data['deal_type'] = 'Acquisition'
                 
