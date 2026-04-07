@@ -148,9 +148,9 @@
     <p style="margin-top:8px; font-size:11px; color:var(--accent); font-family:'DM Mono',monospace; letter-spacing:0.5px;">Built by Jay Kim · jayjak4172@gmail.com</p>
   </div>
   <div class="header-right">
-    <div>329 M&A Deals · 65 Development Projects</div>
-    <div>Aug 2024 — Mar 2026</div>
-    <div>Updated March 26, 2026</div>
+    <div>348 M&A Deals · 74 Development Projects</div>
+    <div>Aug 2024 — Apr 2026</div>
+    <div>Updated April 06, 2026</div>
   </div>
 </header>
 
@@ -162,44 +162,34 @@
   </div>
   <div class="insight">
     <div class="insight-icon">🌎</div>
-    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for 93 deals (28% of total). Atlanta leads all metros with 16 deals.</div>
+    <div class="insight-text"><strong>Sunbelt dominance:</strong> CA, FL, TX, GA account for 99 deals (28% of total). Atlanta leads all metros with 17 deals.</div>
   </div>
   <div class="insight">
     <div class="insight-icon">🏗️</div>
-    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> 27 new development projects in 2026 YTD (~9.0/month), up from 25 in 2H 2025 (~4.2/month) — a leading indicator of supply pressure in 18–24 months.</div>
+    <div class="insight-text"><strong>Supply pipeline accelerating:</strong> 34 new development projects in 2026 YTD (~11.3/month), up from 27 in 2H 2025 (~4.5/month) — a leading indicator of supply pressure in 18–24 months.</div>
   </div>
 </div>
 
-<div class="kpi-row">
+<div class="kpi-row" style="grid-template-columns: repeat(4, 1fr)">
   <div class="kpi">
     <div class="kpi-label">2026 YTD Acquisitions</div>
-    <div class="kpi-value gold">57</div>
-    <div class="kpi-sub">+29 vs 2025 same period</div>
+    <div class="kpi-value gold">72</div>
+    <div class="kpi-sub">+39 vs 2025 same period</div>
   </div>
   <div class="kpi">
-    <div class="kpi-label">2026 YTD Value</div>
-    <div class="kpi-value">$2.6B</div>
-    <div class="kpi-sub">$-3.4B vs 2025</div>
+    <div class="kpi-label">Avg Units per Deal (YTD)</div>
+    <div class="kpi-value">228</div>
+    <div class="kpi-sub">-5 vs 2025 same period · 53/72 deals reported</div>
   </div>
   <div class="kpi">
-    <div class="kpi-label">2026 YTD Units</div>
-    <div class="kpi-value">9,923</div>
-    <div class="kpi-sub">beds transacted</div>
+    <div class="kpi-label">Dev Pipeline · Trailing 24M</div>
+    <div class="kpi-value blue">74</div>
+    <div class="kpi-sub"></div>
   </div>
   <div class="kpi">
-    <div class="kpi-label">Dev Pipeline</div>
-    <div class="kpi-value blue">65</div>
-    <div class="kpi-sub">9,027 units planned</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">Financing</div>
-    <div class="kpi-value teal">9</div>
-    <div class="kpi-sub">2026 YTD</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">States Covered</div>
-    <div class="kpi-value">42</div>
-    <div class="kpi-sub">DB: 329 deals Aug 2024 — Mar 2026</div>
+    <div class="kpi-label">Total in Database</div>
+    <div class="kpi-value">348</div>
+    <div class="kpi-sub">74 development projects · Aug 2024 — Apr 2026</div>
   </div>
 </div>
 
@@ -207,11 +197,6 @@
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">Deal Volume — Monthly Trend</div>
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot dot-acq"></div>Acquisitions</div>
-        <div class="legend-item"><div class="legend-dot dot-fin"></div>Financing</div>
-        <div class="legend-item"><div class="legend-dot dot-dev"></div>Development</div>
-      </div>
     </div>
     <div class="chart-wrap"><canvas id="volumeChart"></canvas></div>
   </div>
@@ -228,7 +213,7 @@
   <div class="panel">
     <div class="panel-header">
       <div class="panel-title">Deal Size Distribution</div>
-      <div class="panel-meta">80 priced deals</div>
+      <div class="panel-meta">82 priced deals</div>
     </div>
     <div class="price-bars" id="price-bars"></div>
   </div>
@@ -267,8 +252,8 @@
     Extracted via automated pipeline using GPT-3.5 · Built by Jay Kim
   </p>
   <p style="text-align:right">
-    329 M&A deals · 65 development projects<br>
-    Updated March 26, 2026
+    348 M&A deals · 74 development projects<br>
+    Updated April 06, 2026
   </p>
 </footer>
 
@@ -278,122 +263,149 @@ const DATA = {
     {
       "month": "2024-08",
       "Acquisition": 26,
-      "Financing": 1,
-      "Development": 1
+      "AcquisitionFinancing": 0,
+      "Development": 1,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2024-09",
       "Acquisition": 23,
-      "Financing": 2,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2024-10",
       "Acquisition": 12,
-      "Financing": 0,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2024-11",
       "Acquisition": 6,
-      "Financing": 1,
-      "Development": 1
+      "AcquisitionFinancing": 0,
+      "Development": 1,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2024-12",
       "Acquisition": 7,
-      "Financing": 0,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2025-01",
       "Acquisition": 9,
-      "Financing": 1,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2025-02",
       "Acquisition": 9,
-      "Financing": 0,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2025-03",
       "Acquisition": 10,
-      "Financing": 0,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2025-04",
       "Acquisition": 5,
-      "Financing": 0,
-      "Development": 0
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2025-05",
       "Acquisition": 3,
-      "Financing": 0,
-      "Development": 4
+      "AcquisitionFinancing": 0,
+      "Development": 3,
+      "DevelopmentFinancing": 1
     },
     {
       "month": "2025-06",
       "Acquisition": 9,
-      "Financing": 1,
-      "Development": 7
+      "AcquisitionFinancing": 0,
+      "Development": 5,
+      "DevelopmentFinancing": 2
     },
     {
       "month": "2025-07",
       "Acquisition": 7,
-      "Financing": 0,
-      "Development": 7
+      "AcquisitionFinancing": 0,
+      "Development": 6,
+      "DevelopmentFinancing": 1
     },
     {
       "month": "2025-08",
       "Acquisition": 8,
-      "Financing": 2,
-      "Development": 5
+      "AcquisitionFinancing": 0,
+      "Development": 3,
+      "DevelopmentFinancing": 2
     },
     {
       "month": "2025-09",
       "Acquisition": 22,
-      "Financing": 0,
-      "Development": 9
+      "AcquisitionFinancing": 0,
+      "Development": 7,
+      "DevelopmentFinancing": 2
     },
     {
       "month": "2025-10",
       "Acquisition": 38,
-      "Financing": 0,
-      "Development": 1
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 1
     },
     {
       "month": "2025-11",
       "Acquisition": 25,
-      "Financing": 0,
-      "Development": 1
+      "AcquisitionFinancing": 0,
+      "Development": 1,
+      "DevelopmentFinancing": 0
     },
     {
       "month": "2025-12",
-      "Acquisition": 35,
-      "Financing": 1,
-      "Development": 2
+      "Acquisition": 38,
+      "AcquisitionFinancing": 0,
+      "Development": 2,
+      "DevelopmentFinancing": 1
     },
     {
       "month": "2026-01",
-      "Acquisition": 20,
-      "Financing": 1,
-      "Development": 10
+      "Acquisition": 27,
+      "AcquisitionFinancing": 1,
+      "Development": 7,
+      "DevelopmentFinancing": 2
     },
     {
       "month": "2026-02",
       "Acquisition": 27,
-      "Financing": 5,
-      "Development": 11
+      "AcquisitionFinancing": 0,
+      "Development": 8,
+      "DevelopmentFinancing": 3
     },
     {
       "month": "2026-03",
-      "Acquisition": 10,
-      "Financing": 3,
-      "Development": 6
+      "Acquisition": 17,
+      "AcquisitionFinancing": 0,
+      "Development": 11,
+      "DevelopmentFinancing": 1
+    },
+    {
+      "month": "2026-04",
+      "Acquisition": 1,
+      "AcquisitionFinancing": 0,
+      "Development": 0,
+      "DevelopmentFinancing": 0
     }
   ],
   "buyers": [
@@ -426,14 +438,14 @@ const DATA = {
       "count": 3
     },
     {
-      "name": "Welltower",
+      "name": "Southeast-based owner and operator",
       "count": 3
     }
   ],
   "metros": [
     {
       "metro": "Atlanta",
-      "count": 16
+      "count": 17
     },
     {
       "metro": "Chicago",
@@ -449,11 +461,11 @@ const DATA = {
     },
     {
       "metro": "Philadelphia",
-      "count": 7
+      "count": 8
     },
     {
       "metro": "Minneapolis",
-      "count": 7
+      "count": 8
     },
     {
       "metro": "New York City",
@@ -466,12 +478,12 @@ const DATA = {
   ],
   "states": [
     {
-      "state": "FL",
-      "count": 26
+      "state": "CA",
+      "count": 30
     },
     {
-      "state": "CA",
-      "count": 26
+      "state": "FL",
+      "count": 27
     },
     {
       "state": "TX",
@@ -479,18 +491,22 @@ const DATA = {
     },
     {
       "state": "GA",
-      "count": 15
+      "count": 16
     },
     {
       "state": "CO",
-      "count": 14
+      "count": 15
     },
     {
       "state": "MN",
-      "count": 13
+      "count": 14
     },
     {
       "state": "PA",
+      "count": 12
+    },
+    {
+      "state": "NY",
       "count": 11
     },
     {
@@ -498,7 +514,7 @@ const DATA = {
       "count": 10
     },
     {
-      "state": "NY",
+      "state": "SC",
       "count": 9
     },
     {
@@ -506,7 +522,7 @@ const DATA = {
       "count": 9
     },
     {
-      "state": "SC",
+      "state": "MO",
       "count": 8
     },
     {
@@ -518,18 +534,126 @@ const DATA = {
       "count": 8
     },
     {
-      "state": "MO",
+      "state": "NJ",
       "count": 7
     },
     {
-      "state": "NJ",
-      "count": 7
+      "state": "AZ",
+      "count": 6
+    },
+    {
+      "state": "TN",
+      "count": 6
+    },
+    {
+      "state": "VA",
+      "count": 6
+    },
+    {
+      "state": "MD",
+      "count": 5
+    },
+    {
+      "state": "MI",
+      "count": 5
+    },
+    {
+      "state": "AL",
+      "count": 5
+    },
+    {
+      "state": "OH",
+      "count": 5
+    },
+    {
+      "state": "CT",
+      "count": 4
+    },
+    {
+      "state": "NE",
+      "count": 4
+    },
+    {
+      "state": "WA",
+      "count": 4
+    },
+    {
+      "state": "IN",
+      "count": 3
+    },
+    {
+      "state": "KS",
+      "count": 3
+    },
+    {
+      "state": "NV",
+      "count": 3
+    },
+    {
+      "state": "MA",
+      "count": 3
+    },
+    {
+      "state": "UT",
+      "count": 3
+    },
+    {
+      "state": "NC",
+      "count": 3
+    },
+    {
+      "state": "WV",
+      "count": 3
+    },
+    {
+      "state": "VT",
+      "count": 2
+    },
+    {
+      "state": "MS",
+      "count": 2
+    },
+    {
+      "state": "NM",
+      "count": 1
+    },
+    {
+      "state": "OK",
+      "count": 1
+    },
+    {
+      "state": "WY",
+      "count": 1
+    },
+    {
+      "state": "NH",
+      "count": 1
+    },
+    {
+      "state": "LA",
+      "count": 1
+    },
+    {
+      "state": "DE",
+      "count": 1
+    },
+    {
+      "state": "AR",
+      "count": 1
+    },
+    {
+      "state": "ID",
+      "count": 1
+    },
+    {
+      "state": "GA, SC",
+      "count": 1
     }
   ],
   "price_dist": [
     {
       "range": "<$50M",
-      "count": 31
+      "count": 32
     },
     {
       "range": "$50–100M",
@@ -537,7 +661,7 @@ const DATA = {
     },
     {
       "range": "$100–200M",
-      "count": 16
+      "count": 17
     },
     {
       "range": "$200–500M",
@@ -551,15 +675,15 @@ const DATA = {
   "property_types": [
     {
       "type": "SNF",
-      "count": 50
+      "count": 53
     },
     {
       "type": "AL/MC",
-      "count": 41
+      "count": 46
     },
     {
       "type": "IL/AL/MC",
-      "count": 35
+      "count": 36
     },
     {
       "type": "AL",
@@ -567,13 +691,1193 @@ const DATA = {
     },
     {
       "type": "Other",
-      "count": 21
+      "count": 26
     },
     {
       "type": "IL",
       "count": 10
     }
-  ]
+  ],
+  "state_deals": {
+    "AL": [
+      {
+        "property_name": "224-unit portfolio of three seniors housing communities in Alabama",
+        "buyer": "Trinity Investors",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "five communities",
+        "buyer": "StepStone Real Estate and Blue Moon Capital Partners",
+        "price": "$250M",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "141-unit independent living community in Wichita Falls, Texas",
+        "buyer": "Silver Wave Capital",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "Publicly traded REIT",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Senior Living Community in Anniston",
+        "buyer": "Publicly traded REIT",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "AR": [
+      {
+        "property_name": "Stonehaven Assisted Living",
+        "buyer": "Private Company",
+        "price": "—",
+        "article_date": "Oct 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "AZ": [
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Non-publicly traded REIT",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Watermark at Morrison Ranch, Acoya Mesa",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Watermark at Morrison Ranch",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Thunderbird Senior Living",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "La Sonora at Dove Mountain",
+        "buyer": "Stellar Senior Living",
+        "price": "—",
+        "article_date": "Jul 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "CA": [
+      {
+        "property_name": "Silver Oaks Memory Care",
+        "buyer": "Kalesta Healthcare",
+        "price": "$24M",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Hendrix Apartments and The Hadley Apartments",
+        "buyer": "Eagle Partners",
+        "price": "$162M",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Clearwater at North Tustin",
+        "buyer": "Health Wave Partners",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Clearwater at North Tustin",
+        "buyer": "Health Wave Partners",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Atria Park of San Mateo",
+        "buyer": "Shelter Real Estate Investment Properties and Calson Management",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "CO": [
+      {
+        "property_name": "Jackson Creek Senior Living",
+        "buyer": "Inland Real Estate Acquisitions",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "MorningStar Senior Living of Parker",
+        "buyer": "Health Wave Partners",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Oberon House",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Carillon at Belleview Station",
+        "buyer": "Undisclosed",
+        "price": "$96M",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Chicago-based private equity group",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "CT": [
+      {
+        "property_name": "The Residence at Selleck’s Woods, The Residence at Summer Street",
+        "buyer": "Harrison Street",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Harrison Street",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Kimberly Place, One Leonard",
+        "buyer": "Heritage Housing",
+        "price": "$40M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Kimberly Place and One Leonard",
+        "buyer": "Heritage Housing",
+        "price": "$40M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "DE": [
+      {
+        "property_name": "HarborChase of Wilmington",
+        "buyer": "Publicly Traded REIT",
+        "price": "$45M",
+        "article_date": "Oct 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "FL": [
+      {
+        "property_name": "Tuscan Gardens of Palm Coast",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Foundry Commercial",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "Undisclosed buyer",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Alto Clermont and Alto Tavares",
+        "buyer": "Foundry Commercial and Fortress Investment Group",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "GA": [
+      {
+        "property_name": "At Home Senior Living",
+        "buyer": "Thrive Senior Living",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Multiple Buyers",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "—",
+        "price": "$108M",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Three-property portfolio in Atlanta, Georgia",
+        "buyer": "LTC Properties",
+        "price": "$108M",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Amira Choice of Sarasota",
+        "buyer": "Institutional private equity group and joint-venture partner",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "GA, SC": [
+      {
+        "property_name": "N/A",
+        "buyer": "Southeast-based operator",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "ID": [
+      {
+        "property_name": "N/A",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Sep 2024",
+        "deal_type": "Financing"
+      }
+    ],
+    "IL": [
+      {
+        "property_name": "The Sheridan at Green Oaks",
+        "buyer": "Town Lane and Arcole",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "McKenzie Falls",
+        "buyer": "Undisclosed",
+        "price": "$7M",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Ventas",
+        "price": "$800M",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Hearthwood Senior Living",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "JDI Realty",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "IN": [
+      {
+        "property_name": "Kingston HealthCare Company",
+        "buyer": "Trilogy Health Services",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Outlook Hamilton",
+        "buyer": "Middle Street Partners",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Outlook Hamilton",
+        "buyer": "Middle Street Partners",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "KS": [
+      {
+        "property_name": "Vintage Park brand",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Vintage Park",
+        "buyer": "Midwest Health",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Hillside Village",
+        "buyer": "Public Company",
+        "price": "—",
+        "article_date": "Aug 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "KY": [
+      {
+        "property_name": "N/A",
+        "buyer": "Allegro Living Management",
+        "price": "$106M",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "Undisclosed West Coast-based buyer",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "LTC Properties",
+        "price": "$40M",
+        "article_date": "Sep 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "LTC Properties",
+        "price": "$40M",
+        "article_date": "Sep 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "American Healthcare REIT",
+        "price": "$65M",
+        "article_date": "Sep 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "LA": [
+      {
+        "property_name": "Regency House Alexandria",
+        "buyer": "National Owner-Operator",
+        "price": "—",
+        "article_date": "Oct 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "MA": [
+      {
+        "property_name": "The Woods at Merrimack",
+        "buyer": "Capitol Seniors Housing & Global Alternative Asset Manager",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Woods at Merrimack",
+        "buyer": "Capitol Seniors Housing and Global Alternative Asset Manager",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "MD": [
+      {
+        "property_name": "N/A",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "Mid-Atlantic Skilled Nursing Portfolio",
+        "buyer": "CareTrust",
+        "price": "$142M",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Arbor Crest",
+        "buyer": "Northern Liberties and Equity Resource Investments",
+        "price": "—",
+        "article_date": "Jun 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Brightview Bethesda Woodmont",
+        "buyer": "Solera Senior Living",
+        "price": "—",
+        "article_date": "Mar 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Gardens of Annapolis",
+        "buyer": "Corten Real Estate and Real Asset Industries",
+        "price": "—",
+        "article_date": "Oct 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "MI": [
+      {
+        "property_name": "Kauhale Otsego",
+        "buyer": "Regional Owner",
+        "price": "$11M",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Rivertown Ridge",
+        "buyer": "CPF Living",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Rivertown Ridge",
+        "buyer": "CPF Living",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Samaritas CCRC",
+        "buyer": "Optalis Healthcare",
+        "price": "—",
+        "article_date": "Aug 2024",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Countryside Care Center",
+        "buyer": "Regional Operator",
+        "price": "—",
+        "article_date": "Aug 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "MN": [
+      {
+        "property_name": "The Pillars of Lakeville",
+        "buyer": "Artemis Real Estate Partners",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Nine Mile Creek Senior Living, Willows Bend Senior Living",
+        "buyer": "National REIT",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Nine Mile Creek Senior Living, Willows Bend Senior Living",
+        "buyer": "National REIT",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Hayden Grove Bloomington",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Hayden Grove Bloomington",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "MO": [
+      {
+        "property_name": "The Grande at Creve Coeur, The Grande at Laumeier Park, The Grande at Chesterfield",
+        "buyer": "Kauhale Health",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Grande at Creve Coeur",
+        "buyer": "Kauhale Health",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "Undisclosed real estate investment firm",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Oak Pointe of Carthage, Oak Pointe of Kearney, Oak Pointe of Maryville, Oak Pointe of Monett, Oak Pointe of Neosho, Oak Pointe of Rolla, Oak Pointe of Washington",
+        "buyer": "Stacked Stone Ventures, Praxis Capital",
+        "price": "$71M",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "MS": [
+      {
+        "property_name": "—",
+        "buyer": "Southeast-based owner and operator",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Southeast-based owner and operator",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NC": [
+      {
+        "property_name": "Overture Cary, Overture Chapel Hill",
+        "buyer": "Principal Asset Management",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Overture Cary, Overture Chapel Hill",
+        "buyer": "Principal Asset Management",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "May 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NE": [
+      {
+        "property_name": "Cottonwood Estates",
+        "buyer": "Texas-based owner and operator",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Cottonwood Estates",
+        "buyer": "Texas-based owner and operator",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Agemark Portfolio",
+        "buyer": "National Health Investors",
+        "price": "$64M",
+        "article_date": "Apr 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Holmes Lake Rehabilitation & Care Center",
+        "buyer": "Regional owner-operator",
+        "price": "—",
+        "article_date": "Aug 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NH": [
+      {
+        "property_name": "Meredith Bay Colony Club",
+        "buyer": "Taylor Community",
+        "price": "$11M",
+        "article_date": "Nov 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NJ": [
+      {
+        "property_name": "—",
+        "buyer": "Large Regional Owner",
+        "price": "$18M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Three-Community Portfolio in New Jersey",
+        "buyer": "Large regional owner",
+        "price": "$18M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Laurel Circle",
+        "buyer": "Maxwell Group and Senior Living Communities",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Laurel Circle",
+        "buyer": "Maxwell Group and Senior Living Communities",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Arbor Terrace Roseland",
+        "buyer": "National Development",
+        "price": "—",
+        "article_date": "Jun 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NM": [
+      {
+        "property_name": "North Ridge Memory Care",
+        "buyer": "Anthem Memory Care",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NV": [
+      {
+        "property_name": "San Martin Senior Living",
+        "buyer": "Clarion Partners and Stellar Senior Living",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Lakeside Manor",
+        "buyer": "Pennsylvania-based private equity group",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Lakeside Manor",
+        "buyer": "Pennsylvania-based private equity group",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "NY": [
+      {
+        "property_name": "Assisted Living and Memory Care Campus in Long Island",
+        "buyer": "Real estate investor",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Briarwood Manor",
+        "buyer": "Private Real Estate Investor",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Briarwood Manor",
+        "buyer": "Private real estate investor",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Willow Ridge Senior Living",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Willow Ridge Senior Living",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "OH": [
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Undisclosed",
+        "price": "$7M",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "—",
+        "price": "$9M",
+        "article_date": "Feb 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "Barchester",
+        "buyer": "Welltower",
+        "price": "$6900M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Memorial Gables",
+        "buyer": "Ohio-based operator",
+        "price": "—",
+        "article_date": "Oct 2024",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Community First Solutions",
+        "price": "—",
+        "article_date": "Aug 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "OK": [
+      {
+        "property_name": "Village at Oakwood Assisted Living",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "OR": [
+      {
+        "property_name": "Morningstar at Happy Valley",
+        "buyer": "Harrison Street",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Churchill Estates",
+        "buyer": "Joint Venture",
+        "price": "$18M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Churchill Estates",
+        "buyer": "Undisclosed",
+        "price": "$18M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Mount Hood Senior Living",
+        "buyer": "Local operator",
+        "price": "—",
+        "article_date": "Aug 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Ackerly at Sherwood",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Jun 2025",
+        "deal_type": "Financing"
+      }
+    ],
+    "PA": [
+      {
+        "property_name": "The Terrace at Chestnut Hill",
+        "buyer": "MVJ Ventures",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Messiah Village",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "The Devon Senior Living",
+        "buyer": "Juniper Communities",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Devon Senior Living",
+        "buyer": "Juniper Communities",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Mar 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "SC": [
+      {
+        "property_name": "Ambriant at Avondale, Ambriant at Austin Village",
+        "buyer": "Publicly traded REIT",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Claiborne at Brickyard Crossing",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "—",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "Westminster Memory Care",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Jan 2026",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "TN": [
+      {
+        "property_name": "The Capstone at Station Camp",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "Undisclosed REIT",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "CareTrust REIT",
+        "price": "$176M",
+        "article_date": "Jan 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Mabry Health Care & Rehabilitation Center",
+        "buyer": "Strawberry Fields REIT",
+        "price": "—",
+        "article_date": "Sep 2024",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Buffalo, New York-based owner-operator",
+        "price": "—",
+        "article_date": "Sep 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "TX": [
+      {
+        "property_name": "Marble Falls Assisted Living",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Financing"
+      },
+      {
+        "property_name": "Standalone memory care community",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Hacienda at Georgetown",
+        "buyer": "Touchmark",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Reserve at North Dallas",
+        "buyer": "Unbridled Living",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Reserve at North Dallas",
+        "buyer": "Unbridled Living",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "UT": [
+      {
+        "property_name": "The Lodge at North Ogden",
+        "buyer": "Undisclosed REIT",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Lodge at North Ogden",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Truewood Taylorsville",
+        "buyer": "Private owner",
+        "price": "—",
+        "article_date": "Aug 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "VA": [
+      {
+        "property_name": "—",
+        "buyer": "New York-based owner and operator",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "New York-based owner and operator",
+        "price": "—",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Sancerre at Atlee Station",
+        "buyer": "Clarion Partners",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Sancerre at Atlee Station",
+        "buyer": "Clarion Partners",
+        "price": "—",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Mary Hardesty House",
+        "buyer": "Community Housing Partners",
+        "price": "$6M",
+        "article_date": "Mar 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "VT": [
+      {
+        "property_name": "The Village at White River Junction",
+        "buyer": "Benchmark Senior Living, National Development",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "The Village at White River Junction",
+        "buyer": "Benchmark Senior Living, National Development",
+        "price": "—",
+        "article_date": "Dec 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "WA": [
+      {
+        "property_name": "The Grand at Spokane",
+        "buyer": "Clarion Partners",
+        "price": "—",
+        "article_date": "Apr 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Mar 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Moran Vista Senior Living",
+        "buyer": "Undisclosed",
+        "price": "—",
+        "article_date": "Jan 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Mallard Landing, Orchard Pointe, Blossom Valley, Blossom Creek",
+        "buyer": "American Healthcare REIT",
+        "price": "—",
+        "article_date": "Sep 2024",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "WI": [
+      {
+        "property_name": "Portage County Health Care Center",
+        "buyer": "Undisclosed",
+        "price": "$3M",
+        "article_date": "Feb 2026",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Hamilton House Senior Living, Eagle Point Senior Living, Kettle Park Senior Living, Reena Senior Living, Cardinal View Senior Living",
+        "buyer": "—",
+        "price": "$195M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "LTC Properties",
+        "price": "$195M",
+        "article_date": "Oct 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "—",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Sep 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "N/A",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Sep 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "WV": [
+      {
+        "property_name": "N/A",
+        "buyer": "Marx Development Group (MDG)",
+        "price": "$60M",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Marx Development Group (MDG)",
+        "price": "$140M",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      },
+      {
+        "property_name": "Undisclosed",
+        "buyer": "Marx Development Group (MDG)",
+        "price": "$140M",
+        "article_date": "Nov 2025",
+        "deal_type": "Acquisition"
+      }
+    ],
+    "WY": [
+      {
+        "property_name": "Douglas Care Center and Mountain Lodge",
+        "buyer": "—",
+        "price": "—",
+        "article_date": "Jun 2025",
+        "deal_type": "Acquisition"
+      }
+    ]
+  }
 };
 
 Chart.defaults.color = '#8892a4';
@@ -581,21 +1885,59 @@ Chart.defaults.font.family = "'DM Mono', monospace";
 Chart.defaults.font.size = 11;
 const GOLD = '#c8a96e', TEAL = '#7eb8a4', BLUE = '#8b9ed4';
 
-// Volume chart
+const GOLD_DARK = '#c8a96e', GOLD_LIGHT = '#f0deb8';
+const BLUE_DARK = '#1a2f6e', BLUE_LIGHT = '#8b9ed4';
+
+// Volume chart — grouped stacked (Acq stack | Dev stack per month)
 new Chart(document.getElementById('volumeChart').getContext('2d'), {
   type: 'bar',
   data: {
     labels: DATA.monthly.map(d => d.month),
     datasets: [
-      { label: 'Acquisitions', data: DATA.monthly.map(d => d.Acquisition), backgroundColor: GOLD+'cc', borderColor: GOLD, borderWidth: 1 },
-      { label: 'Financing',    data: DATA.monthly.map(d => d.Financing),   backgroundColor: TEAL+'cc', borderColor: TEAL, borderWidth: 1 },
-      { label: 'Development',  data: DATA.monthly.map(d => d.Development), backgroundColor: BLUE+'cc', borderColor: BLUE, borderWidth: 1 },
+      {
+        label: 'Acquisition',
+        data: DATA.monthly.map(d => d.Acquisition),
+        backgroundColor: GOLD_DARK + 'ff',
+        borderColor: GOLD_DARK,
+        borderWidth: 1,
+        stack: 'acq',
+      },
+      {
+        label: 'Acquisition Financing',
+        data: DATA.monthly.map(d => d.AcquisitionFinancing),
+        backgroundColor: GOLD_LIGHT + 'bb',
+        borderColor: GOLD_LIGHT,
+        borderWidth: 1,
+        borderDash: [3, 3],
+        stack: 'acq',
+      },
+      {
+        label: 'Development',
+        data: DATA.monthly.map(d => d.Development),
+        backgroundColor: BLUE_DARK + 'ff',
+        borderColor: BLUE_DARK,
+        borderWidth: 1,
+        stack: 'dev',
+      },
+      {
+        label: 'Development Financing',
+        data: DATA.monthly.map(d => d.DevelopmentFinancing),
+        backgroundColor: BLUE_LIGHT + 'bb',
+        borderColor: BLUE_LIGHT,
+        borderWidth: 1,
+        borderDash: [3, 3],
+        stack: 'dev',
+      },
     ]
   },
   options: {
     responsive: true, maintainAspectRatio: true,
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: true,
+        position: 'top',
+        labels: { boxWidth: 10, boxHeight: 10, padding: 16, color: '#b0b8d0', font: { size: 11 } }
+      },
       tooltip: { backgroundColor: '#13161e', borderColor: '#252938', borderWidth: 1, titleColor: '#e8e6e0', bodyColor: '#7a7f94' }
     },
     scales: {
@@ -689,13 +2031,25 @@ new Chart(document.getElementById('ptChart').getContext('2d'), {
     "55":"WI","56":"WY"
   };
 
-  // Tooltip
+  // Tooltip (hover)
   const tooltip = d3.select('body').append('div')
     .style('position','absolute').style('display','none')
     .style('background','#13161e').style('border','1px solid #252938')
     .style('color','#e8e6e0').style('padding','8px 12px')
     .style('font-family','DM Mono, monospace').style('font-size','12px')
     .style('pointer-events','none').style('border-radius','2px');
+
+  // Click popup
+  const popup = d3.select('body').append('div')
+    .style('position','absolute').style('display','none')
+    .style('background','#13161e').style('border','1px solid #c8a96e')
+    .style('color','#e8e6e0').style('padding','14px 16px')
+    .style('font-family','DM Mono, monospace').style('font-size','11px')
+    .style('border-radius','2px').style('min-width','260px')
+    .style('max-width','320px').style('z-index','999').style('line-height','1.8')
+    .style('box-shadow','0 4px 24px rgba(0,0,0,0.5)');
+
+  const stateDeals = DATA.state_deals || {};
 
   svg.selectAll('path')
     .data(topojson.feature(us, us.objects.states).features)
@@ -708,12 +2062,16 @@ new Chart(document.getElementById('ptChart').getContext('2d'), {
     })
     .attr('stroke', '#252938')
     .attr('stroke-width', 0.8)
+    .style('cursor', d => {
+      const abbr = stateNames[d.id.toString().padStart(2,'0')];
+      return (stateData[abbr] || 0) > 0 ? 'pointer' : 'default';
+    })
     .on('mouseover', function(event, d) {
       const abbr = stateNames[d.id.toString().padStart(2,'0')];
       const count = stateData[abbr] || 0;
       d3.select(this).attr('stroke', '#c8a96e').attr('stroke-width', 1.5);
       tooltip.style('display','block')
-        .html(`<strong>${abbr}</strong>: ${count} deal${count !== 1 ? 's' : ''}`);
+        .html(`<strong>${abbr}</strong>: ${count} deal${count !== 1 ? 's' : ''} — click for details`);
     })
     .on('mousemove', function(event) {
       tooltip.style('left', (event.pageX + 12) + 'px').style('top', (event.pageY - 28) + 'px');
@@ -721,9 +2079,29 @@ new Chart(document.getElementById('ptChart').getContext('2d'), {
     .on('mouseout', function() {
       d3.select(this).attr('stroke', '#252938').attr('stroke-width', 0.8);
       tooltip.style('display','none');
+    })
+    .on('click', function(event, d) {
+      const abbr = stateNames[d.id.toString().padStart(2,'0')];
+      const deals = stateDeals[abbr] || [];
+      if (!deals.length) return;
+      tooltip.style('display','none');
+      let html = `<div style="color:#c8a96e;margin-bottom:10px;letter-spacing:1px;font-size:10px">${abbr} — RECENT DEALS (${stateData[abbr]} total)</div>`;
+      deals.forEach(dl => {
+        html += `<div style="border-top:1px solid #252938;padding:6px 0">
+          <div style="color:#e8e6e0;font-size:11px">${dl.property_name}</div>
+          <div style="color:#8892a4;font-size:10px">${dl.buyer} · ${dl.price} · ${dl.article_date}</div>
+        </div>`;
+      });
+      html += `<div style="margin-top:8px;font-size:9px;color:#8892a4;letter-spacing:0.5px">Click elsewhere to close</div>`;
+      popup.style('display','block').html(html)
+        .style('left', (event.pageX + 16) + 'px')
+        .style('top', (event.pageY - 20) + 'px');
+      event.stopPropagation();
     });
 
-  // State abbreviation labels for states with deals
+  d3.select('body').on('click.popup', () => popup.style('display','none'));
+
+  // State labels for states with deals
   svg.selectAll('text')
     .data(topojson.feature(us, us.objects.states).features)
     .join('text')
@@ -736,16 +2114,16 @@ new Chart(document.getElementById('ptChart').getContext('2d'), {
       const g = d3.select(this.parentNode).append('g');
       g.append('text')
         .attr('x', centroid[0]).attr('y', centroid[1] - 3)
-        .attr('text-anchor','middle').attr('font-size', '9px')
+        .attr('text-anchor','middle').attr('font-size', '11px')
         .attr('font-family','DM Mono, monospace')
         .attr('fill', count > maxCount * 0.5 ? '#fff' : '#e8e6e0')
         .attr('pointer-events','none')
         .text(abbr);
       g.append('text')
-        .attr('x', centroid[0]).attr('y', centroid[1] + 9)
-        .attr('text-anchor','middle').attr('font-size', '10px')
+        .attr('x', centroid[0]).attr('y', centroid[1] + 12)
+        .attr('text-anchor','middle').attr('font-size', '12px')
         .attr('font-family','DM Serif Display, serif')
-        .attr('fill', count > maxCount * 0.5 ? '#c8a96e' : '#c8a96e')
+        .attr('fill','#c8a96e')
         .attr('pointer-events','none')
         .text(count);
     });
